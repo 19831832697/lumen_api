@@ -93,7 +93,6 @@ class UserController extends Controller
             $res=[
                 'code'=>40005,
                 'msg'=>'账号或密码错误'
-                
             ];
         }
         return json_encode($res,JSON_UNESCAPED_UNICODE);
