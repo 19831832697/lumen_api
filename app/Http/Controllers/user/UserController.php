@@ -84,12 +84,16 @@ class UserController extends Controller
             Cache::set($key,$token,60*60*27*7);
             $res=[
                 'code'=>200,
-                'msg'=>'登录成功'
+                'msg'=>'登录成功',
+                'data'=>[
+                    'token'=>$token
+                ],
             ];
         }else{
             $res=[
                 'code'=>40005,
                 'msg'=>'账号或密码错误'
+                
             ];
         }
         return json_encode($res,JSON_UNESCAPED_UNICODE);
