@@ -109,7 +109,8 @@ class RegController extends Controller
      * @param Request $request
      */
     public function userInfo(Request $request){
-        $user_id=$request->input('user_id');
+        $user_id=$_GET['user_id'];
+        $u_token=$_GET['token'];
         $key="token$user_id";
         $token=Redis::get($key);
         if($token){
