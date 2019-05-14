@@ -67,9 +67,10 @@ class RegController extends Controller
             $user_name=$dataInfo->user_name;
             $user_id=$dataInfo->user_id;
             if(password_verify($user_pwd,$dataInfo->user_pwd)){
-//                $token=$this->token($user_name,$user_id);
-//                $key="token$user_id";
-//                Redis::set($key,$token);
+                $token=$this->token($user_name,$user_pwd);
+                $key="token$user_id";
+                Redis::set($key,$token);
+                Redis::expire($key,60*60*24*7);
                 $res=[
                     'code'=>200,
                     'msg'=>'登录成功',
@@ -108,6 +109,10 @@ class RegController extends Controller
      */
     public function userInfo(Request $request){
         $user_id=$request->input('user_id');
+        $key="token$user_id";
+        $token=Redis::get($key);
+        var_dump($token);die;
+
         $where=[
             'user_id'=>$user_id
         ];
