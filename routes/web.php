@@ -20,15 +20,9 @@ $router->post('verify', 'decrypt\DecryptController@verify');
 $router->post('regDo', 'user\UserController@regDo');
 $router->get('loginDo', 'user\UserController@loginDo');
 
-
 $router->post('register', 'user\RegController@register');
 $router->post('login', 'user\RegController@login');
-//$router->get('userInfo', 'user\RegController@userInfo')->Middleware('token');
 
 $router->group(['middleware' => 'token'], function () use ($router) {
     $router->get('userInfo',['uses'=>'user\RegController@userInfo']);
 });
-
-//$router->get('userInfo', ['middleware' => 'token', function () {
-//
-//}]);
