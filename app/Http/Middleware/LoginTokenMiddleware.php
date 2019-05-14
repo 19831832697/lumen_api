@@ -18,13 +18,13 @@ class LoginTokenMiddleware
     {
         $user_id=$_GET['user_id'];
         $u_token=$_GET['token'];
-        if(empty($token) || empty($user_id)){
-            $res=[
-                'errno'=>40003,
-                'msg'=>'参数不全'
-            ];
-            die(json_encode($res,JSON_UNESCAPED_UNICODE));
-        }
+//        if(empty($token) || empty($user_id)){
+//            $res=[
+//                'errno'=>40003,
+//                'msg'=>'参数不全'
+//            ];
+//            die(json_encode($res,JSON_UNESCAPED_UNICODE));
+//        }
         $key="token$user_id";
         $token=Redis::get($key);
         if($token){
