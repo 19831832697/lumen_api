@@ -5,9 +5,16 @@ namespace App\Http\Controllers\user;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
 
 class RegController extends Controller
 {
+    /**
+     * 注册接口
+     * @param Request $request
+     * @return false|string
+     */
     public function register(Request $request){
         $user_name=$request->input('user_name');
         $user_email=$request->input('user_email');
@@ -43,6 +50,12 @@ class RegController extends Controller
             return json_encode($res,JSON_UNESCAPED_UNICODE);
         }
     }
+
+    /**
+     * 登录接口
+     * @param Request $request
+     * @return false|string
+     */
     public function login(Request $request){
         $user_name=$request->input('user_name');
         $user_pwd=$request->input('user_pwd');
@@ -51,10 +64,16 @@ class RegController extends Controller
         ];
         $dataInfo=DB::table('register')->where($where)->first();
         if($dataInfo){
+            $user_name=$dataInfo->user_name;
+            $user_id=$dataInfo->user_id;
             if(password_verify($user_pwd,$dataInfo->user_pwd)){
+//                $token=$this->token($user_name,$user_id);
+//                $key="token$user_id";
+//                Redis::set($key,$token);
                 $res=[
                     'code'=>200,
-                    'msg'=>'登录成功'
+                    'msg'=>'登录成功',
+                    'user_id'=>$user_id
                 ];
                 return json_encode($res,JSON_UNESCAPED_UNICODE);
             }else{
@@ -71,5 +90,29 @@ class RegController extends Controller
             ];
             return json_encode($res,JSON_UNESCAPED_UNICODE);
         }
+    }
+
+    /**
+     * 生成token
+     * @param $user_id
+     * @param $user_name
+     * @return string
+     */
+    public function token($user_id,$user_name){
+        return substr(sha1(Str::random(11).md5($user_name)),5,15)."user_id".$user_id;
+    }
+
+    /**
+     * 个人中心
+     * @param Request $request
+     */
+    public function userInfo(Request $request){
+        $user_id=$request->input('user_id');
+        $where=[
+            'user_id'=>$user_id
+        ];
+        $dataInfo=DB::table('register')->where($where)->first();
+        $data=json_encode($dataInfo);
+        return $data;
     }
 }

@@ -22,3 +22,4 @@ $router->get('loginDo', 'user\UserController@loginDo');
 
 $router->post('register', 'user\RegController@register');
 $router->post('login', 'user\RegController@login');
+$router->post('userInfo', 'user\RegController@userInfo');
