@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\user;
+header('Access-Control-Allow-Origin:http://127.0.0.1:8848');
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
