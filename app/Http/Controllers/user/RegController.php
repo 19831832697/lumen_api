@@ -74,7 +74,8 @@ class RegController extends Controller
                 $res=[
                     'code'=>200,
                     'msg'=>'登录成功',
-                    'user_id'=>$user_id
+                    'user_id'=>$user_id,
+                    'token'=>$token
                 ];
                 return json_encode($res,JSON_UNESCAPED_UNICODE);
             }else{
