@@ -110,30 +110,11 @@ class RegController extends Controller
      */
     public function userInfo(Request $request){
         $user_id=$_GET['user_id'];
-        $u_token=$_GET['token'];
-        $key="token$user_id";
-        $token=Redis::get($key);
-        if($token){
-            if($token==$u_token){
-                $where=[
-                    'user_id'=>$user_id
-                ];
-                $dataInfo=DB::table('register')->where($where)->first();
-                $data=json_encode($dataInfo);
-                return $data;
-            }else {
-                $res = [
-                    'code' => 50002,
-                    'msg' => '不合法的token值'
-                ];
-                return json_encode($res, JSON_UNESCAPED_UNICODE);
-            }
-        }else{
-            $res = [
-                'code' => 50002,
-                'msg' => '请先登录'
-            ];
-            return json_encode($res, JSON_UNESCAPED_UNICODE);
-        }
+        $where=[
+            'user_id'=>$user_id
+        ];
+        $dataInfo=DB::table('register')->where($where)->first();
+        $data=json_encode($dataInfo);
+        return $data;
     }
 }
