@@ -63,6 +63,7 @@ class RegController extends Controller
             'user_name'=>$user_name
         ];
         $dataInfo=DB::table('register')->where($where)->first();
+        var_dump($dataInfo);die;
         if($dataInfo){
             $user_name=$dataInfo->user_name;
             $user_id=$dataInfo->user_id;
