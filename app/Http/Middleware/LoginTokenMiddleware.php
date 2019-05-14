@@ -28,14 +28,14 @@ class LoginTokenMiddleware
                     'code' => 50002,
                     'msg' => '不合法的token值'
                 ];
-                echo json_encode($response, JSON_UNESCAPED_UNICODE);
+//                echo json_encode($response, JSON_UNESCAPED_UNICODE);
             }
         }else{
             $response = [
                 'code' => 50002,
                 'msg' => '请先登录'
             ];
-            echo json_encode($response, JSON_UNESCAPED_UNICODE);
+//            echo json_encode($response, JSON_UNESCAPED_UNICODE);
         }
         return $response;
     }
