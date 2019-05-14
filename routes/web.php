@@ -18,4 +18,4 @@ $router->post('decrypt', 'decrypt\DecryptController@decrypt');
 $router->post('rsa', 'decrypt\DecryptController@rsa');
 $router->post('verify', 'decrypt\DecryptController@verify');
 $router->post('regDo', 'user\UserController@regDo');
-$router->post('loginDo', 'user\UserController@loginDo');
+$router->get('loginDo', 'user\UserController@loginDo');

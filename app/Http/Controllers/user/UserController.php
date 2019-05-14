@@ -56,8 +56,11 @@ class UserController extends Controller
 
     /**
      * 登录执行接口
+     * @return false|string
      */
     public function loginDo(){
+//        header('Access-Control-Allow-Origin:http://client.1809a.com');
+        echo 5555;die;
         $data=file_get_contents("php://input");
         $dataInfo=openssl_get_publickey('file://'.storage_path('app/key/public.pem'));
         openssl_public_decrypt($data,$dec_data,$dataInfo);
@@ -81,7 +84,8 @@ class UserController extends Controller
         }else if(password_verify($pwd,$user_pwd)){
             $token=$this->token($user_id,$user_name);
             $key="token".$user_id;
-            Cache::set($key,$token,60*60*27*7);
+            Redis::set($key,$token);
+            Redis::expire($key,60*60*27*7);
             $res=[
                 'code'=>200,
                 'msg'=>'登录成功',
