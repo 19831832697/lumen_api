@@ -111,13 +111,19 @@ class RegController extends Controller
         $user_id=$request->input('user_id');
         $key="token$user_id";
         $token=Redis::get($key);
-        var_dump($token);die;
-
-        $where=[
-            'user_id'=>$user_id
-        ];
-        $dataInfo=DB::table('register')->where($where)->first();
-        $data=json_encode($dataInfo);
-        return $data;
+        if($token){
+            $where=[
+                'user_id'=>$user_id
+            ];
+            $dataInfo=DB::table('register')->where($where)->first();
+            $data=json_encode($dataInfo);
+            return $data;
+        }else{
+            $res=[
+                'code'=>50002,
+                'msg'=>'不合法的token值'
+            ];
+            return json_encode($res,JSON_UNESCAPED_UNICODE);
+        }
     }
 }
