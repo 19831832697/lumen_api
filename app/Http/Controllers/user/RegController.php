@@ -81,13 +81,13 @@ class RegController extends Controller
             }else{
                 $res=[
                     'code'=>40020,
-                    'msg'=>'登录失败'
+                    'msg'=>'账号或密码错误'
                 ];
                 return json_encode($res,JSON_UNESCAPED_UNICODE);
             }
         }else{
             $res=[
-                'code'=>40010,
+                'code'=>40020,
                 'msg'=>'没有此账号'
             ];
             return json_encode($res,JSON_UNESCAPED_UNICODE);
