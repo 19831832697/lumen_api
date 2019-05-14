@@ -58,6 +58,7 @@ class RegController extends Controller
      */
     public function login(Request $request){
         $user_name=$request->input('user_name');
+        print_r($user_name);
         $user_pwd=$request->input('user_pwd');
         $where=[
             'user_name'=>$user_name
