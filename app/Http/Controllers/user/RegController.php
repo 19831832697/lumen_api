@@ -58,13 +58,11 @@ class RegController extends Controller
      */
     public function login(Request $request){
         $user_name=$request->input('user_name');
-        print_r($user_name);
         $user_pwd=$request->input('user_pwd');
         $where=[
             'user_name'=>$user_name
         ];
         $dataInfo=DB::table('register')->where($where)->first();
-        var_dump($dataInfo);die;
         if($dataInfo){
             $user_name=$dataInfo->user_name;
             $user_id=$dataInfo->user_id;
