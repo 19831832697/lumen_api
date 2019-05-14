@@ -15,7 +15,6 @@ class LoginTokenMiddleware
      */
     public function handle($request, Closure $next)
     {
-        echo 222;die;
         if($request->isMethod('OPTIONS')){
             $response=response('');
         }else{
