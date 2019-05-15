@@ -58,12 +58,13 @@ $app->singleton(
 */
 
  $app->middleware([
-     App\Http\Middleware\ExampleMiddleware::class
+     App\Http\Middleware\ExampleMiddleware::class,
+     App\Http\Middleware\LoginTokenMiddleware::class,
  ]);
 
  $app->routeMiddleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,
-     'token' => App\Http\Middleware\LoginTokenMiddleware::class,
+     'l_token' => App\Http\Middleware\TokenMiddleware::class,
  ]);
 
 /*

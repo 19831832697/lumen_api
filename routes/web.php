@@ -22,7 +22,8 @@ $router->get('loginDo', 'user\UserController@loginDo');
 
 $router->post('register', 'user\RegController@register');
 $router->post('login', 'user\RegController@login');
+//$router->get('userInfo',['uses'=>'user\RegController@userInfo']);
 
-$router->group(['middleware' => 'token'], function () use ($router) {
+$router->group(['middleware' => 'l_token'], function () use ($router) {
     $router->get('userInfo',['uses'=>'user\RegController@userInfo']);
 });

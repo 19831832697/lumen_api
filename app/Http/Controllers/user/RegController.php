@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\user;
-//header('Access-Control-Allow-Origin:http://127.0.0.1:8848');
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,40 +15,19 @@ class RegController extends Controller
      * @param Request $request
      * @return false|string
      */
-    public function register(Request $request){
-        $user_name=$request->input('user_name');
-        $user_email=$request->input('user_email');
-        $user_pwd=$request->input('user_pwd');
-        $where=[
-            'user_email'=>$user_email
-        ];
-        $dataInfo=DB::table('register')->where($where)->first();
-        if($dataInfo){
-            $res=[
-                'code'=>40002,
-                'msg'=>'此邮箱已存在'
-            ];
-            return json_encode($res,JSON_UNESCAPED_UNICODE);
-        }
-        $arrInfo=[
-            'user_name'=>$user_name,
-            'user_email'=>$user_email,
-            'user_pwd'=>password_hash($user_pwd,PASSWORD_BCRYPT)
-        ];
-        $arr=DB::table('register')->insert($arrInfo);
-        if($arr){
-            $res=[
-                'code'=>200,
-                'msg'=>'注册成功'
-            ];
-            return json_encode($res,JSON_UNESCAPED_UNICODE);
-        }else{
-            $res=[
-                'code'=>40002,
-                'msg'=>'注册失败'
-            ];
-            return json_encode($res,JSON_UNESCAPED_UNICODE);
-        }
+    public function register( Request $request){
+       $arrInfo=$request->input();
+       $arr=json_encode($arrInfo);
+
+        $url="http://pass.1809a.com/reg";
+        $ch=curl_init($url);
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch,CURLOPT_POST,1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$arr);
+        curl_setopt($ch,CURLOPT_HTTPHEADER,['Content-Type:text/plain']);
+        $res=curl_exec($ch);
+        echo $res;
     }
 
     /**
@@ -58,41 +36,18 @@ class RegController extends Controller
      * @return false|string
      */
     public function login(Request $request){
-        $user_name=$request->input('user_name');
-        $user_pwd=$request->input('user_pwd');
-        $where=[
-            'user_name'=>$user_name
-        ];
-        $dataInfo=DB::table('register')->where($where)->first();
-        if($dataInfo){
-            $user_name=$dataInfo->user_name;
-            $user_id=$dataInfo->user_id;
-            if(password_verify($user_pwd,$dataInfo->user_pwd)){
-                $token=$this->token($user_name,$user_pwd);
-                $key="token$user_id";
-                Redis::set($key,$token);
-                Redis::expire($key,60*60*24*7);
-                $res=[
-                    'code'=>200,
-                    'msg'=>'登录成功',
-                    'user_id'=>$user_id,
-                    'token'=>$token
-                ];
-                return json_encode($res,JSON_UNESCAPED_UNICODE);
-            }else{
-                $res=[
-                    'code'=>40020,
-                    'msg'=>'账号或密码错误'
-                ];
-                return json_encode($res,JSON_UNESCAPED_UNICODE);
-            }
-        }else{
-            $res=[
-                'code'=>40020,
-                'msg'=>'没有此账号'
-            ];
-            return json_encode($res,JSON_UNESCAPED_UNICODE);
-        }
+       $dataInfo=$request->input();
+       $data=json_encode($dataInfo);
+
+        $url="http://pass.1809a.com/login";
+        $ch=curl_init($url);
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch,CURLOPT_POST,1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
+        curl_setopt($ch,CURLOPT_HTTPHEADER,['Content-Type:text/plain']);
+        $res=curl_exec($ch);
+        echo $res;
     }
 
     /**
