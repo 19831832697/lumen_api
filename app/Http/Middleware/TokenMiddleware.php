@@ -22,8 +22,8 @@ class TokenMiddleware
         $token=Redis::get($key);
         if($token){
             if($token==$u_token){
-                return $next($request);
-        }else {
+
+            }else {
                 $response = [
                     'code' => 50002,
                     'msg' => '不合法的token值'
@@ -37,5 +37,6 @@ class TokenMiddleware
             ];
             return json_encode($response, JSON_UNESCAPED_UNICODE);
         }
+        return $next($request);
     }
 }
