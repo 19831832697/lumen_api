@@ -19,7 +19,7 @@ class RegController extends Controller
        $arrInfo=$request->input();
        $arr=json_encode($arrInfo);
 
-        $url="http://pass.1809a.com/reg";
+        $url="http://passport.ffddd.top/reg";
         $ch=curl_init($url);
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
@@ -39,7 +39,7 @@ class RegController extends Controller
        $dataInfo=$request->input();
        $data=json_encode($dataInfo);
 
-        $url="http://pass.1809a.com/login";
+        $url="http://passport.ffddd.top/login";
         $ch=curl_init($url);
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
@@ -56,7 +56,7 @@ class RegController extends Controller
      */
     public function userInfo(Request $request){
         $user_id=$_GET['user_id'];
-        $url="http://pass.1809a.com/center";
+        $url="http://passport.ffddd.top/center";
         $ch=curl_init($url);
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
