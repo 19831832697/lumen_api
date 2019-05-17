@@ -131,6 +131,7 @@ class GoodsController extends Controller
    public function pay(Request $request){
        $goods_id=$request->input('goods_id');
        $user_id=$request->input('user_id');
+       $goods_id=rtrim($goods_id,',');
        $goodsId=explode(',',$goods_id);
        $where=[
            'user_id'=>$user_id
@@ -150,22 +151,22 @@ class GoodsController extends Controller
             'user_id'=>$user_id,
             'order_amount'=>$order_amount
         ];
-        DB::table('shop_order')->insert($dataInfo);
+        $order_id=DB::table('shop_order')->insertGetId($dataInfo);
+        $orderData=DB::table('shop_order')->where('order_id',$order_id)->first();
+        $order_no=$orderData->order_no;
        //订单详情入库
-       $orderData=DB::table('shop_order')->where('order_no',$orderno)->get();
-//       var_dump($orderData);die;
 
        //两表连查订单详情入库
        $data=DB::table('shop_goods')
            ->join('shop_cart','shop_goods.goods_id','=','shop_cart.goods_id')
-//           ->whereIn('shop_goods.goods_id',$goodsId)
+           ->whereIn('shop_goods.goods_id',$goodsId)
            ->get();
 //       var_dump($data);die;
 
        foreach($data as $v){
            $arr=[
-               'order_id'=>$orderData[0]->order_id,
-               'order_no'=>$orderno,
+               'order_id'=>$order_id,
+               'order_no'=>$order_no,
                'goods_id'=>$v->goods_id,
                'user_id'=>$user_id,
                'goods_name'=>$v->goods_name,
@@ -177,8 +178,9 @@ class GoodsController extends Controller
        }
        $arr=DB::table('shop_cart')->whereIn('goods_id',$goodsId)->where('user_id',$user_id)
            ->update(['buy_num'=>0,'status'=>2]);
+//       var_dump($arr);die;
        if($arr){
-           return $orderno;
+           return $order_no;
        }
    }
 
