@@ -156,9 +156,9 @@ class GoodsController extends Controller
 //       var_dump($orderData);die;
 
        //两表连查订单详情入库
-       $data=Db::table('shop_goods')
+       $data=DB::table('shop_goods')
            ->join('shop_cart','shop_goods.goods_id','=','shop_cart.goods_id')
-           ->whereIn('shop_goods.goods_id',$goodsId)
+//           ->whereIn('shop_goods.goods_id',$goodsId)
            ->get();
 //       var_dump($data);die;
 
