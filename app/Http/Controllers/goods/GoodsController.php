@@ -178,10 +178,9 @@ class GoodsController extends Controller
        }
        $arr=DB::table('shop_cart')->whereIn('goods_id',$goodsId)->where('user_id',$user_id)
            ->update(['buy_num'=>0,'status'=>2]);
-//       var_dump($arr);die;
-       if($arr){
-           return $order_no;
-       }
+
+           echo $order_no;
+
    }
 
     /**
