@@ -50,7 +50,7 @@ class GoodsController extends Controller
        ];
        $arr=json_encode($arrInfo);
 
-       $url="http://pass.1809a.com/cart";
+       $url="http://passport.ffddd.top/cart";
        $ch=curl_init($url);
        curl_setopt($ch,CURLOPT_URL,$url);
        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
