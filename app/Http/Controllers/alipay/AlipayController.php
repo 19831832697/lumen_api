@@ -11,7 +11,7 @@ class AlipayController extends Controller
 {
     public function zPay(Request $request){
         $order_no=$request->input('orderno');
-        $dataInfo=DB::table('shop_order')->where('order_no',$order_no)->first();
+        $dataInfo=DB::table('shop_order')->where(['order_no'=>$order_no])->first();
         if($dataInfo){
             $order_id=$dataInfo->order_id;
             $url="http://passport.ffddd.top/zPay?order_id=$order_id";
@@ -24,9 +24,5 @@ class AlipayController extends Controller
             var_dump($res);
         }
         var_dump($dataInfo);die;
-
-
-
-
     }
 }
