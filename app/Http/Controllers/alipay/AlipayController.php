@@ -12,9 +12,13 @@ class AlipayController extends Controller
 {
     public function zPay(Request $request){
         $order_no=$_GET['orderno'];
+        echo $order_no;
+        echo "<hr/>";
         $where=[
             'order_no'=>$order_no
         ];
+        print_r($where);
+        echo "<hr/>";
         $dataInfo=OrderModel::where($where)->first();
         var_dump($dataInfo);die;
         if($dataInfo){
@@ -28,6 +32,5 @@ class AlipayController extends Controller
 //        echo $errno;
             var_dump($res);
         }
-
     }
 }
