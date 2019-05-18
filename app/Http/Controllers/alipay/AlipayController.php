@@ -20,6 +20,12 @@ class AlipayController extends Controller
         print_r($where);
         echo "<hr/>";
         $dataInfo=OrderModel::where($where)->first();
+
+        $sql = app('db')->getQueryLog();
+
+        var_dump($sql);
+
+
         var_dump($dataInfo);die;
         if($dataInfo){
             $order_id=$dataInfo->order_id;
