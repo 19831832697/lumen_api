@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\DB;
 class AlipayController extends Controller
 {
     public function zPay(Request $request){
-        var_dump($_GET);die;
         $order_no=$_GET['orderno'];
-        $dataInfo=DB::table('shop_order')->where(['order_no'=>$order_no])->first();
+        $dataInfo=DB::table('shop_order')
+                ->where(['order_no'=>$order_no])
+                ->get();
+        var_dump($dataInfo);die;
         if($dataInfo){
             $order_id=$dataInfo->order_id;
             $url="http://passport.ffddd.top/zPay?order_id=$order_id";
@@ -24,6 +26,6 @@ class AlipayController extends Controller
 //        echo $errno;
             var_dump($res);
         }
-        var_dump($dataInfo);die;
+
     }
 }
