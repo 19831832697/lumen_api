@@ -15,7 +15,7 @@ class AlipayController extends Controller
         $order_id=$dataInfo->order_id;
 
 
-        $url="http://pass.1809a.com/zPay?order_id=$order_id";
+        $url="http://passport.ffddd.top/zPay?order_id=$order_id";
         $ch=curl_init($url);
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
