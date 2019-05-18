@@ -31,6 +31,7 @@ $router->post('cartInfo', 'goods\GoodsController@cartInfo');
 $router->post('cartDel', 'goods\GoodsController@cartDel');
 $router->post('pay', 'goods\GoodsController@pay');
 $router->post('payShow', 'goods\GoodsController@payShow');
+$router->get('zPay', 'alipay\AlipayController@zPay');
 //$router->post('cartAllDel', 'goods\GoodsController@cartAllDel');
 
 
