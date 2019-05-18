@@ -16,7 +16,7 @@ class AlipayController extends Controller
             'order_no'=>$order_no
         ];
         $dataInfo=OrderModel::where($where)->first();
-        var_dump($dataInfo);die;
+//        var_dump($dataInfo);die;
         if($dataInfo){
             $order_id=$dataInfo->order_id;
             $url="http://passport.ffddd.top/zPay?order_id=$order_id";
