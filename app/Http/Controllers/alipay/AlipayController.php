@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 class AlipayController extends Controller
 {
     public function zPay(Request $request){
+        var_dump($_GET);die;
         $order_no=$_GET['orderno'];
         $dataInfo=DB::table('shop_order')->where(['order_no'=>$order_no])->first();
         if($dataInfo){
