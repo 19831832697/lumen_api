@@ -50,7 +50,7 @@ class GoodsController extends Controller
        ];
        $arr=json_encode($arrInfo);
 
-       $url="http://passport.ffddd.top/cart";
+       $url="http://pass.1809a.com/cart";
        $ch=curl_init($url);
        curl_setopt($ch,CURLOPT_URL,$url);
        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
@@ -133,16 +133,17 @@ class GoodsController extends Controller
        $user_id=$request->input('user_id');
        $goods_id=rtrim($goods_id,',');
        $goodsId=explode(',',$goods_id);
-       $where=[
+        $where=[
            'user_id'=>$user_id
        ];
-       if(empty($goodsId)){
+       if(empty($goods_id)){
            $res=[
                'code'=>40022,
                'msg'=>'至少选中一件商品'
            ];
            return json_encode($res,JSON_UNESCAPED_UNICODE);
        }
+//       die;
        $order_amount=200;
        $orderno=date('YmdHis',time()).rand(1000,9999);
        //添加订单表
@@ -152,8 +153,6 @@ class GoodsController extends Controller
             'order_amount'=>$order_amount
         ];
         $order_id=DB::table('shop_order')->insertGetId($dataInfo);
-        $orderData=DB::table('shop_order')->where('order_id',$order_id)->first();
-        $order_no=$orderData->order_no;
        //订单详情入库
 
        //两表连查订单详情入库
@@ -162,11 +161,11 @@ class GoodsController extends Controller
            ->whereIn('shop_goods.goods_id',$goodsId)
            ->get();
 //       var_dump($data);die;
-
+        $info=[];
        foreach($data as $v){
            $arr=[
                'order_id'=>$order_id,
-               'order_no'=>$order_no,
+               'order_no'=>$orderno,
                'goods_id'=>$v->goods_id,
                'user_id'=>$user_id,
                'goods_name'=>$v->goods_name,
@@ -174,12 +173,18 @@ class GoodsController extends Controller
                'goods_price'=>$v->goods_price,
                'ctime'=>time(),
            ];
-           $res=Db::table('shop_order_detail')->insert($arr);
+           $info[]=$arr;
        }
+       $res=Db::table('shop_order_detail')->insert($info);
        $arr=DB::table('shop_cart')->whereIn('goods_id',$goodsId)->where('user_id',$user_id)
            ->update(['buy_num'=>0,'status'=>2]);
-
-           echo $order_no;
+        if($arr){
+            $res=[
+                'code'=>200,
+                'orderno'=>$orderno
+            ];
+            return json_encode($res,JSON_UNESCAPED_UNICODE);
+        }
 
    }
 
