@@ -13,6 +13,7 @@ class AlipayController extends Controller
         $order_no=$request->input('orderno');
 //        echo $order_no;die;
         $dataInfo=DB::table('shop_order')->where('order_no',$order_no)->first();
+        var_dump($dataInfo);die;
         $order_id=$dataInfo->order_id;
 
 
