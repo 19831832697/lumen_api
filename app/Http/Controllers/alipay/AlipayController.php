@@ -12,8 +12,8 @@ class AlipayController extends Controller
     public function zPay(Request $request){
         $order_no=$_GET['orderno'];
         $dataInfo=DB::table('shop_order')
-                ->where(['order_no'=>$order_no])
-                ->get();
+//                ->where(['order_no'=>$order_no])
+                ->first(); 
         var_dump($dataInfo);die;
         if($dataInfo){
             $order_id=$dataInfo->order_id;
