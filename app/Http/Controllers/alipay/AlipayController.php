@@ -25,6 +25,6 @@ class AlipayController extends Controller
         $res=curl_exec($ch);
 //        $errno=curl_errno($ch);
 //        echo $errno;
-        header("refresh:2;url=$res");
+        echo $res;
     }
 }
