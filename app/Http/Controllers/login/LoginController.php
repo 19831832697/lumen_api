@@ -17,12 +17,17 @@ class LoginController extends Controller
     public function loginDo(Request $request)
     {
         $arrInfo = file_get_contents("php://input");
-        $method = "AES-256-CBC";
-        $key = "Admin123";
-        $options = OPENSSL_RAW_DATA;
-        $iv="12345tgvfred2346";
-        $data = openssl_decrypt($arrInfo,$method,$key,$options,$iv);
-        $dataInfo = json_decode($data,true);
+        //非对称解密
+        $k = openssl_get_publickey("file://".storage_path('app/key/public.pem'));
+        openssl_public_decrypt($arrInfo,$des_data,$k);
+//        var_dump($des_data);die;
+        //对称解密
+//        $method = "AES-256-CBC";
+//        $key = "Admin123";
+//        $options = OPENSSL_RAW_DATA;
+//        $iv="12345tgvfred2346";
+//        $data = openssl_decrypt($arrInfo,$method,$key,$options,$iv);
+        $dataInfo = json_decode($des_data,true);
 //        var_dump($dataInfo);die;
         $user_name = $dataInfo['user_name'];
         $user_pwd = $dataInfo['user_pwd'];
