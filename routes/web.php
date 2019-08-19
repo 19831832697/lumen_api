@@ -18,7 +18,9 @@ $router->post('decrypt', 'decrypt\DecryptController@decrypt');
 $router->post('rsa', 'decrypt\DecryptController@rsa');
 $router->post('verify', 'decrypt\DecryptController@verify');
 $router->post('regDo', 'user\UserController@regDo');
-$router->get('loginDo', 'user\UserController@loginDo');
+//$router->get('loginDo', 'user\UserController@loginDo');
+
+$router->post('loginDo','login\LoginController@loginDo');
 
 
 
@@ -32,11 +34,6 @@ $router->post('cartDel', 'goods\GoodsController@cartDel');
 $router->post('pay', 'goods\GoodsController@pay');
 $router->post('payShow', 'goods\GoodsController@payShow');
 $router->get('zPay', 'alipay\AlipayController@zPay');
-//$router->post('cartAllDel', 'goods\GoodsController@cartAllDel');
-
-
-
-//$router->get('userInfo',['uses'=>'user\RegController@userInfo']);
 
 $router->group(['middleware' => 'l_token'], function () use ($router) {
     $router->get('userInfo',['uses'=>'user\RegController@userInfo']);
